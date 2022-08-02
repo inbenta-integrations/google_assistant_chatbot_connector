@@ -97,52 +97,77 @@ The Google template must be served by a public web server in order to allow Goog
 Log in to your Google account and go to your [Google Actions Console](https://console.actions.google.com/):
 
 Click on **New Project** and choose your Project name (the name will not be relevant to the user), your Project language of your choice (as long as it is supported by Inbenta), and your counry or region:
+
 ![instructions01](public/Instructions/instructions01.png)
 
 
 On the **What kind of Action do you want to build?** section choose **Custom**
+
 ![instructions02](public/Instructions/instructions02.png)
 
 
 And on the **What kind of Action do you want to build?** section select **Blank project**
+
 ![instructions03](public/Instructions/instructions03.png)
 
 
 Next, you must implement an **Invocation** for your Google Action. Keep in mind that this is what the user will say before using your Action, so it should be relevant to its content without being too wordy or complicated.
+
 ![instructions04](public/Instructions/instructions04.png)
 
 
 Now we will create a **Type**. On the Types section of the Develop Console, create a new Type and name it *"any"* (this exact name is not strictly necessary for this Connector to work). For the kind of values that this type should support, select *"Free form text"*.
+
 ![instructions05](public/Instructions/instructions05.png)
 
-The next step is to crete a **Custom Intent** that can use the **Type** we made in the last step. To do so, create a new one in the Custom Intents section and name it *"INPUT"* (this exact name must be used for the Connector to work). Set it to be a Global Intent, since we will want to capture the user's input with this at any point in the conversation. Scroll to the bottom, enter a new parameter and call it *"any"* and, set its type to *any*.
+The next step is to crete a **Custom Intent** that can use the **Type** we made in the last step. To do so, create a new one in the Custom Intents section and name it *"INPUT"* (this exact name must be used for the Connector to work).
+
+![instructions06_1](public/Instructions/instructions06_1.png)
+
+Set it to be a Global Intent, since we will want to capture the user's input with this at any point in the conversation.
+
+![instructions06_2](public/Instructions/instructions06_2.png)
+
+Scroll to the bottom, enter a new parameter and call it *"any"* and set its "Data type" to *any*.
+
+![instructions06_3](public/Instructions/instructions06_3.png)
+
 Now we can enter a phrase to capture that parameter. If we enter *"any"* as a phrase and press enter, the Custom Intent will only be called when the user enters that literal string. However, now we can match that string to be the parameter we specified by selecting it with the cursor and choosing the parameter. Now, our custom intent be matched whenever a user enters a string that can be matched to the *"Free form text"* type; in other words, anything that the user enters.
+
 ![instructions06](public/Instructions/instructions06.png)
 
 In order for INPUT to be repeatedly matched to, we need to create a **Scene**. Go to Scenes and create a new one called *"Talking"*. Assign a **User intent handling** to it with the values seen below (the text under **Call your webhook** is irrelevant to our Connector implementation, however that field is not optional in the Console):
+
 ![instructions07](public/Instructions/instructions07.png)
 
 Go to **Deep link to INPUT** and make the following chages:
+
 ![instructions08](public/Instructions/instructions08.png)
 
 
 Now, go to **Main invocation** and make the following chages:
+
 ![instructions09](public/Instructions/instructions09.png)
 
 Under **System intents**, edit **CANCEL** to have the following values (we can ignore **NO_MATCH** and **NO_INPUT** since they should never be called for this action):
+
 ![instructions10](public/Instructions/instructions10.png)
 
 Go to the **Webhook** section and select **HTTPS endpoint** as a Fullfilment method.
+
 ![instructions11](public/Instructions/instructions11.png)
 
 Enter URL of the server where this Connector is hosted.
+
 ![instructions12](public/Instructions/instructions12.png)
 
 
 ## **Action ID**
 
 The **Action ID** is a password-like value, which can be used to ensure that the incoming calls from Google are coming from the Action you created and not some other one. You can find your ID in the URL of your Actions Console:
+
 ![instructions13](public/Instructions/instructions13.png)
+
 Once you have it on your clipboard, paste it into the **conf/custom/google.php** file:
 
 ```php
